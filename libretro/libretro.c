@@ -445,7 +445,11 @@ static void emu_step_initialize(void)
     plugin_connect_all();
 }
 
+#ifdef EMSCRIPTEN
+static void EmuThreadFunction(void)
+#else
 static void* EmuThreadFunction(void* param)
+#endif
 {
     uint32_t netplay_port = 0;
     uint16_t netplay_player = 1;
@@ -489,7 +493,11 @@ static void* EmuThreadFunction(void* param)
         emuThreadRunning = false;
     }
 
+#ifdef EMSCRIPTEN
+    return;
+#else
     return NULL;
+#endif
 }
 
 static void reinit_gfx_plugin(void)
