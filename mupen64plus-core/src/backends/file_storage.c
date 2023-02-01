@@ -30,6 +30,7 @@
 #include "main/util.h"
 #include "main/netplay.h"
 
+#include <libretro_private.h>
 #include <mupen64plus-next_common.h>
 
 #ifdef NOCOMMON
