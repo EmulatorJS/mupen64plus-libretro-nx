@@ -2002,7 +2002,7 @@ void retro_run (void)
        {
           if(!emuThreadRunning)
           {
-             pthread_create(&emuThread, NULL, &EmuThreadFunction, NULL);
+             pthread_create(&emuThread, NULL, (void*)EmuThreadFunction, NULL);
              emuThreadRunning = true;
           }
        }
