@@ -529,6 +529,8 @@ else ifeq ($(platform), emscripten)
    CXX = em++
    ifeq ($(EMULATORJS_THREADS), 1)
       LDFLAGS += -pthread
+      CXXFLAGS += -pthread
+      PLATCFLAGS += -pthread
    endif
 
    CPUFLAGS += -msimd128 -ftree-vectorize
