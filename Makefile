@@ -5,6 +5,8 @@ LLE ?= 0
 HAVE_PARALLEL_RSP ?= 0
 HAVE_PARALLEL_RDP ?= 0
 
+EMULATORJS_THREADS ?= 0
+
 SYSTEM_MINIZIP ?= 0
 SYSTEM_LIBPNG ?= 0
 SYSTEM_XXHASH ?= 0
@@ -525,6 +527,9 @@ else ifeq ($(platform), emscripten)
    CPUFLAGS += -DEMSCRIPTEN -DNO_ASM -s USE_ZLIB=1
    CC = emcc
    CXX = em++
+   ifeq ($(EMULATORJS_THREADS), 1)
+      LDFLAGS += -pthread
+   endif
 
    CPUFLAGS += -msimd128 -ftree-vectorize
    #CPUFLAGS += -msimd128 -mfloat-abi=hard -mfpu=neon
