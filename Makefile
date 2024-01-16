@@ -6,6 +6,7 @@ HAVE_PARALLEL_RSP ?= 0
 HAVE_PARALLEL_RDP ?= 0
 
 EMULATORJS_THREADS ?= 0
+EMULATORJS_LEGACY ?= 0
 
 SYSTEM_MINIZIP ?= 0
 SYSTEM_LIBPNG ?= 0
@@ -522,7 +523,12 @@ else ifneq (,$(findstring android,$(platform)))
 else ifeq ($(platform), emscripten)
    TARGET := $(TARGET_NAME)_libretro_emscripten.bc
    GLES = 1
-   GLES3 = 1
+   ifeq ($(EMULATORJS_LEGACY), 1)
+      GLES3 = 0
+   else
+      GLES3 = 1
+   endif
+   
    WITH_DYNAREC =
    CPUFLAGS += -DEMSCRIPTEN -DNO_ASM -s USE_ZLIB=1
    CC = emcc
