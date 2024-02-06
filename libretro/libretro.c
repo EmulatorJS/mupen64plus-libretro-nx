@@ -2082,12 +2082,13 @@ size_t retro_serialize_size (void)
 {
     return 16788288 + 1024 + 4 + 4096;
 }
-
 bool retro_serialize(void *data, size_t size)
 {
    if (initializing)
       return false;
-
+  
+   return (bool)ejs_save(data);
+/*
    retro_savestate_complete = false;
    retro_savestate_result = 0;
 
@@ -2114,6 +2115,7 @@ bool retro_serialize(void *data, size_t size)
    }
 
    return !!retro_savestate_result;
+*/
 }
 
 bool retro_unserialize(const void *data, size_t size)

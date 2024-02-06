@@ -2267,6 +2267,13 @@ static int savestates_save_pj64_unc(const struct device* dev, char *filepath)
     return 1;
 }
 
+int ejs_save(void *data) {
+    int ret = 0;
+    const struct device* dev = &g_dev;
+    ret = savestates_save_m64p(dev, data);
+    return ret;
+}
+
 int savestates_save(void)
 {
     int ret = 0;

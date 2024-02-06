@@ -46,6 +46,7 @@ void savestates_init(void);
 void savestates_deinit(void);
 
 int savestates_load(void);
+int ejs_save(void *data);
 int savestates_save(void);
 
 void savestates_select_slot(unsigned int s);
