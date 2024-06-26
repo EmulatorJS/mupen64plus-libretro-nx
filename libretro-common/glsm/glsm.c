@@ -3282,6 +3282,7 @@ static void glsm_state_unbind(void)
 
 static bool glsm_state_ctx_destroy(void *data)
 {
+   window_first = 0;
    return true;
 }
 
