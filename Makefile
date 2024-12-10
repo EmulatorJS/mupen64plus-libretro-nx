@@ -411,12 +411,12 @@ else ifneq (,$(findstring osx,$(platform)))
    GL_LIB := -framework OpenGL
 
    # Target Dynarec
-   ifeq ($(ARCH), $(filter $(ARCH), ppc))
-      WITH_DYNAREC =
-   endif
+   WITH_DYNAREC =
 
    HAVE_PARALLEL_RSP = 1
    HAVE_PARALLEL_RDP = 1
+   HAVE_THR_AL = 1
+   LLE = 1
 
    COREFLAGS += -DOS_LINUX
    ASFLAGS = -f elf -d ELF_TYPE
@@ -440,6 +440,8 @@ else ifneq (,$(findstring ios,$(platform)))
 	ifeq ($(platform),ios-arm64)
 		HAVE_PARALLEL_RSP = 1
 		HAVE_PARALLEL_RDP = 1
+		HAVE_THR_AL = 1
+		LLE = 1
 		WITH_DYNAREC=
 		GLES=1
 		GLES3=1
@@ -492,6 +494,8 @@ else ifneq (,$(findstring tvos,$(platform)))
    EGL := 0
    HAVE_PARALLEL_RSP = 1
    HAVE_PARALLEL_RDP = 1
+   HAVE_THR_AL = 1
+   LLE = 1
    PLATCFLAGS += -DHAVE_POSIX_MEMALIGN -DIOS -DOS_IOS
    PLATCFLAGS += -Ofast -ffast-math -funsafe-math-optimizations -DNO_ASM
    COREFLAGS  += -Ofast -ffast-math -funsafe-math-optimizations -DNO_ASM
@@ -605,8 +609,8 @@ endif
 include Makefile.common
 
 ifeq ($(HAVE_NEON), 1)
-   COREFLAGS += -DHAVE_NEON -D__ARM_NEON__ -D__NEON_OPT -ftree-vectorize -funsafe-math-optimizations -fno-finite-math-only
-   ifneq ($(platform), emscripten)
+   COREFLAGS += -DHAVE_NEON -D__ARM_NEON__ -D__NEON_OPT -ftree-vectorize -funsafe-math-optimizations -fno-finite-math-only -DUSE_SSE2NEON
+   ifeq (,$(filter $(platform),ios-arm64 tvos-arm64))
       COREFLAGS += -mvectorize-with-neon-quad -ftree-vectorizer-verbose=2
    endif
 endif
