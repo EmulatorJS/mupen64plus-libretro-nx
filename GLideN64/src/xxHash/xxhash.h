@@ -3840,7 +3840,7 @@ XXH_PUBLIC_API XXH64_hash_t XXH64_hashFromCanonical(XXH_NOESCAPE const XXH64_can
 #  endif
 #endif
 
-#if defined(__GNUC__) || defined(__clang__)
+#if (defined(__GNUC__) || defined(__clang__)) && !defined(__EMSCRIPTEN__)
 #  if defined(__ARM_FEATURE_SVE)
 #    include <arm_sve.h>
 #  endif
